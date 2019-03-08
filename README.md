@@ -1,0 +1,2 @@
+# anonymap
+Trimming - mapping - anonym
