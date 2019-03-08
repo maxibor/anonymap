@@ -8,7 +8,7 @@
 
 ## Introduction
 
-Anonymap is a simple nextflow pipeline for trimming, aligning, and aonymizing the sam file to lift off data access restrictions.
+Anonymap is a simple nextflow pipeline for trimming, aligning, and anonymizing the sam file to lift off data access restrictions.
 
 ## Dependencies
 - [Conda](https://conda.io/en/latest/miniconda.html)
@@ -66,6 +66,6 @@ Other options:
 - Anonymap replaces the query sequence in the aligment `SAM` files by `NNNNNN...`
 - Anonymap replaces the reference start position of every alignment by 1
 
-These two steps combine impede anyone to have acess to the original sequence.  
-By default only the mapped reads are anonymized. 
-You can anonymze all reads by using `--mode 'all'`
+These two steps combined impede anyone to have acess to the original sequence.  
+By default only the mapped reads are anonymized.  
+You can anonymize all reads by using `--mode 'all'`
