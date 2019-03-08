@@ -61,6 +61,10 @@ Other options:
   --help  --h                   Shows this help page
 ```
 
+## Output
+- `result_directory/<sample_name>.flagstat.txt`: Samtools flagstat alignment statistics
+- `result_directory/<sample_name>.anonym.bam`: Anonymized alignment bam file.
+
 ## Anonymisation
 
 - Anonymap replaces the query sequence in the aligment `SAM` files by `NNNNNN...`
@@ -69,3 +73,7 @@ Other options:
 These two steps combined impede anyone to have acess to the original sequence.  
 By default only the mapped reads are anonymized.  
 You can anonymize all reads by using `--mode 'all'`
+
+## Getting the Bowtie2 Index of reference genome
+
+Pre-indexed genomes for Bowtie2 are provided by Illumina on their [iGenome server](https://support.illumina.com/sequencing/sequencing_software/igenome.html)
