@@ -139,7 +139,7 @@ process Bowtie2Align {
 process anonymize {
     tag "$name"
 
-    conda 'python=3.6 pysam'
+    conda 'python=3.6 bioconda::pysam'
 
     label 'ristretto'
 
