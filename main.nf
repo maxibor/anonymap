@@ -108,7 +108,7 @@ process Bowtie2Align {
 
     label 'intenso'
 
-    publishDir "${params.results}/alignments", pattern: "*.flagstat.txt", mode: 'copy'
+    publishDir "${params.results}", pattern: "*.flagstat.txt", mode: 'copy'
 
     input:
         set val(name), file(reads) from trimmed_reads
@@ -145,14 +145,14 @@ process anonymize {
 
     echo true
 
-    publishDir "${params.results}/alignments", mode: 'copy'
+    publishDir "${params.results}", mode: 'copy'
 
     input:
         set val(name), file(sam) from alignment_genome
     output:
-        set val(name), file("*.anonym.sam") into anonysam
+        set val(name), file("*.anonym.bam") into anonysam
     script:
-        outfile = name+".anonym.sam" 
+        outfile = name+".anonym.bam" 
         """
         anonymize -m ${params.mode} -o $outfile $sam
         """

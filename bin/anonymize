@@ -47,7 +47,7 @@ def getBasename(file_name):
 def anonyBam(inbam, outbam, mode):
     try:
         bamin = pysam.AlignmentFile(inbam, "rb")
-        bamout = pysam.AlignmentFile(outbam, 'w', template=bamin)
+        bamout = pysam.AlignmentFile(outbam, 'wb', template=bamin)
         for i in bamin:
             o = pysam.AlignedSegment()
             # If anonymizing all reads is needed or read is mapped
