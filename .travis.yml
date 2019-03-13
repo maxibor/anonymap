@@ -19,4 +19,4 @@ install:
   - conda install -c bioconda nextflow
 
 script:
-  - nextflow run main.nf -c nextflow.conf -profile test
+  - nextflow run main.nf -profile test
