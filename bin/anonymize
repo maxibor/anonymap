@@ -52,13 +52,11 @@ def anonyBam(inbam, outbam, mode):
             o = pysam.AlignedSegment()
             # If anonymizing all reads is needed or read is mapped
             if mode == "all" or len(i.cigar) > 0:
-                # replace mapping position in reference by 0
-                o.reference_start = 0
                 # replace query sequence by NNN...
                 o.query_sequence = "N"*len(i.query_sequence)
             else:  # do nothing
-                o.reference_start = i.reference_start
                 o.query_sequence = i.query_sequence
+            o.reference_start = i.reference_start
             o.query_name = i.query_name
             o.flag = i.flag
             o.reference_id = i.reference_id

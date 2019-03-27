@@ -125,13 +125,13 @@ process Bowtie2Align {
             """
             bowtie2 -x $index_name -1 ${reads[0]} -2 ${reads[1]} $bowtie_setting --threads ${task.cpus} > $samfile
             samtools view -S -b -@ ${task.cpus} $samfile | samtools sort -@ ${task.cpus} -o $outfile
-            samtools flagstat $samfile > $fstat
+            samtools flagstat $outfile > $fstat
             """
         } else {
             """
             bowtie2 -x $index_name -U ${reads[0]} $bowtie_setting --threads ${task.cpus} > $samfile
             samtools view -S -b -@ ${task.cpus} $samfile | samtools sort -@ ${task.cpus} -o $outfile
-            samtools flagstat $samfile > $fstat
+            samtools flagstat $outfile > $fstat
             """
         }
 }
