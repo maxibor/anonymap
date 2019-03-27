@@ -67,10 +67,8 @@ Other options:
 
 ## Anonymisation
 
-- Anonymap replaces the query sequence in the aligment `SAM` files by `NNNNNN...`
-- Anonymap replaces the reference start position of every alignment by 1
+Anonymap replaces the query sequence in the aligment `SAM` files by `NNNNNN...`  
 
-These two steps combined impede anyone to have acess to the original sequence.  
 By default only the mapped reads are anonymized.  
 You can anonymize all reads by using `--mode 'all'`
 
