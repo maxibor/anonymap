@@ -1,4 +1,5 @@
-[![Build Status](https://www.travis-ci.com/maxibor/anonymap.svg?token=pwT9AgYi4qJY4LTp9WUy&branch=master)](https://www.travis-ci.com/maxibor/anonymap)
+[![Build Status](https://www.travis-ci.com/maxibor/anonymap.svg?token=pwT9AgYi4qJY4LTp9WUy&branch=master)](https://www.travis-ci.com/maxibor/anonymap) [![DOI](https://zenodo.org/badge/174518757.svg)](https://zenodo.org/badge/latestdoi/174518757)
+
 
 # Anonymap
 - Trimming ([AdapterRemoval](https://github.com/MikkelSchubert/adapterremoval)) 
