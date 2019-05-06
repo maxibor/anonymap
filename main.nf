@@ -24,7 +24,7 @@ def helpMessage() {
     nextflow run maxibor/anonymap --btindex "/path/to/bowtieIndex/*.bt2" --reads "/path/to/reads/*_R{1,2}.fastq.gz"
     Mandatory arguments:
       --reads                       Path to input sequencing read file(s) (must be surrounded with double quotes). Example: "/path/to/reads/*_R{1,2}.fastq.gz"
-      --btindex                     Path to Bowtie2 Index (must be surrounded with dpouble quotes). Example: "/path/to/bowtieIndex/*.bt2"
+      --btindex                     Path to Bowtie2 Index (must be surrounded with dpouble quotes). Example: "/path/to/bowtieIndex/genome_basename*"
 
     Options:
       --pairedEnd                   To specify wheter reads are single or paired end. Default = ${params.pairedEnd}
@@ -45,6 +45,16 @@ if (params.help || params.h){
     helpMessage()
     exit 0
 }
+
+def summary = [:]
+summary["reads"] = params.reads
+summary["bowtie index"] = params.btindex
+summary["Read mode"] = params.pairedEnd
+summary["PHRED"] = params.phred
+summary["Anonymization mode"] = params.mode
+summary["result directory"] = params.results
+log.info summary.collect { k,v -> "${k.padRight(25)}: $v" }.join("\n")
+log.info "\033[2m----------------------------------------------------\033[0m"
 
 // Bowtie setting check
 if (params.bowtie == 'very-fast'){
@@ -156,4 +166,44 @@ process anonymize {
         """
         anonymize -m ${params.mode} -o $outfile $sam
         """
+}
+
+workflow.onComplete {
+
+    def report_fields = [:]
+    report_fields['runName'] = custom_runName ?: workflow.runName
+    report_fields['success'] = workflow.success
+    report_fields['dateComplete'] = workflow.complete
+    report_fields['duration'] = workflow.duration
+    report_fields['exitStatus'] = workflow.exitStatus
+    report_fields['errorMessage'] = (workflow.errorMessage ?: 'None')
+    report_fields['errorReport'] = (workflow.errorReport ?: 'None')
+    report_fields['commandLine'] = workflow.commandLine
+    report_fields['projectDir'] = workflow.projectDir
+    report_fields['summary'] = summary
+    report_fields['summary']['Date Started'] = workflow.start
+    report_fields['summary']['Date Completed'] = workflow.complete
+    report_fields['summary']['Pipeline script file path'] = workflow.scriptFile
+    report_fields['summary']['Pipeline script hash ID'] = workflow.scriptId
+    if(workflow.repository) report_fields['summary']['Pipeline repository Git URL'] = workflow.repository
+    if(workflow.commitId) report_fields['summary']['Pipeline repository Git Commit'] = workflow.commitId
+    if(workflow.revision) report_fields['summary']['Pipeline Git branch/tag'] = workflow.revision
+    if(workflow.container) report_fields['summary']['Docker image'] = workflow.container
+    report_fields['summary']['Nextflow Version'] = workflow.nextflow.version
+    report_fields['summary']['Nextflow Build'] = workflow.nextflow.build
+    report_fields['summary']['Nextflow Compile Timestamp'] = workflow.nextflow.timestamp
+
+    // Render the TXT template
+    def engine = new groovy.text.GStringTemplateEngine()
+    def tf = new File("$baseDir/assets/report_template.txt")
+    def txt_template = engine.createTemplate(tf).make(report_fields)
+    def report_txt = txt_template.toString()
+
+    // Write summary e-mail HTML to a file
+    def output_d = new File( "${params.results}/pipeline_info/" )
+    if( !output_d.exists() ) {
+      output_d.mkdirs()
+    }
+    def output_tf = new File( output_d, "anonymap_log.txt" )
+    output_tf.withWriter { w -> w << report_txt }
 }

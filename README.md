@@ -36,20 +36,19 @@ Anonymap is a simple nextflow pipeline for trimming, aligning, and anonymizing t
 
 ```
 $ nextflow run maxibor/anonymap --h
-N E X T F L O W  ~  version 0.32.0
-Launching `main.nf` [prickly_blackwell] - revision: 524a5b2fa5
-
+N E X T F L O W  ~  version 19.04.0
+Launching `main.nf` [romantic_woese] - revision: dca0e16c86
 =========================================
  Anonymap
  Homepage: https://github.com/maxibor/anonymap
- Author: Maxime Borry <borry[at]shh.mpg.de>
+ Author: Maxime Borry <borry@shh.mpg.de>
 =========================================
 Usage:
 The typical command for running the pipeline is as follows:
 nextflow run maxibor/anonymap --btindex "/path/to/bowtieIndex/*.bt2" --reads "/path/to/reads/*_R{1,2}.fastq.gz"
 Mandatory arguments:
   --reads                       Path to input sequencing read file(s) (must be surrounded with double quotes). Example: "/path/to/reads/*_R{1,2}.fastq.gz"
-  --btindex                     Path to Bowtie2 Index (must be surrounded with dpouble quotes). Example: "/path/to/bowtieIndex/*.bt2"
+  --btindex                     Path to Bowtie2 Index (must be surrounded with dpouble quotes). Example: "/path/to/bowtieIndex/genome_basename*"
 
 Options:
   --pairedEnd                   To specify wheter reads are single or paired end. Default = true
@@ -64,6 +63,7 @@ Other options:
 ## Output
 - `result_directory/<sample_name>.flagstat.txt`: Samtools flagstat alignment statistics
 - `result_directory/<sample_name>.anonym.bam`: Anonymized alignment bam file.
+- `result_directory/pipeline_info/anonymap_log.txt`: Anonymap log file
 
 ## Anonymisation
 
